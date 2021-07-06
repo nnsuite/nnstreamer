@@ -736,22 +736,15 @@ TFLiteCore::TFLiteCore (const GstTensorFilterProperties *prop)
 TFLiteCore::~TFLiteCore ()
 {
   if (shared_tensor_filter_key) {
-    if (nnstreamer_filter_shared_table_remove_this (shared_tensor_filter_key, this)) {
-      if (nnstreamer_filter_referred_list_length (shared_tensor_filter_key) == 0) {
-        /* if there is no more referred instance, remove the key from the shared table */
-        nnstreamer_filter_shared_table_remove (shared_tensor_filter_key);
-        /**
-         * @todo the below g_free () should be moved to the last of ~TFLiteCore () method
-         * To remove it, the has table lookup should be changed. 
-         */
-        g_free (shared_tensor_filter_key);
+    if (nnstreamer_filter_shared_table_remove (shared_tensor_filter_key, this)) {
+      if (nnstreamer_filter_referred_list_is_empty (shared_tensor_filter_key)) {
         delete interpreter;
       }
     }
-  } else {
-    delete interpreter;
-    /** @todo should be removed */
     g_free (shared_tensor_filter_key);
+  }
+  else {
+    delete interpreter;
   }
 }
 
@@ -786,8 +779,7 @@ TFLiteCore::checkSharedInterpreter (const GstTensorFilterProperties * prop)
     }
   }
 
-  ml_logd ("The model representation is shared: key=[%s], num of share: %u",
-      shared_tensor_filter_key, nnstreamer_filter_referred_list_length (shared_tensor_filter_key));
+  ml_logd ("The model representation is shared: key=[%s]", shared_tensor_filter_key);
 }
 
 /**

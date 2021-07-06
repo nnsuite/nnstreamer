@@ -563,31 +563,23 @@ nnstreamer_filter_shared_table_insert (char *key, void *value, void *instance);
 
 /* extern functions for shared model representation table */
 /**
- * @brief Remove the shared model representation at the table.
- * @param[in] key The key to remove the matched value of hash table.
- * @return TRUE if the new key and value are removed. FALSE if failed to remove it.
- */
-extern int
-nnstreamer_filter_shared_table_remove (const char *key);
-
-/* extern functions for shared model representation table */
-/**
  * @brief Remove the instance registered at the referred list of shared model table.
+ *        If referred list is empty, remove the shared representation from the table.
  * @param[in] key The key to find the matched list of hash table.
  * @param[in] instance The instance that should be removed from the referred list.
  * @return TRUE if the new key and value are removed. FALSE if failed to remove it.
  */
 extern int
-nnstreamer_filter_shared_table_remove_this (const char *key, const void *instance);
+nnstreamer_filter_shared_table_remove (const char *key, const void *instance);
 
 /* extern functions for shared model representation table */
 /**
- * @brief Get the length of the referred list.
+ * @brief Get whether referred list is empty.
  * @param[in] key The key to find the matched list of hash table.
- * @return The length of the list. If it is NULL, it returns -1
+ * @return TRUE if the list is empty otherwise FALSE
  */
 extern int
-nnstreamer_filter_referred_list_length (const char *key);
+nnstreamer_filter_referred_list_is_empty (const char *key);
 
 /* extern functions for shared model representation table */
 /**
