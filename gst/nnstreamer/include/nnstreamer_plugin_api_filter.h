@@ -598,6 +598,15 @@ nnstreamer_filter_referred_list_length (const char *key);
 extern void *
 nnstreamer_filter_get_shared_model_representation (const char *key);
 
+/* extern functions for shared model representation table */
+/**
+ * @brief Get the reffered list of shared model instances that has the same key.
+ * @param[in] key The key to find the matched shared representation.
+ * @return GList* List of instances. NULL if it is failed.
+ */
+extern void *
+nnstreamer_filter_get_shared_model_referred_list (const char *key);
+
 #ifdef __cplusplus
 }
 #endif

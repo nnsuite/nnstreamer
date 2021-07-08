@@ -2978,3 +2978,28 @@ nnstreamer_filter_get_shared_model_representation (const char *key)
 
   return value->shared_interpreter;
 }
+
+/* extern functions for shared model representation table */
+/**
+ * @brief Get the reffered list of shared model instances that has the same key.
+ * @param[in] key The key to find the matched shared representation.
+ * @return GList* List of instances. NULL if it is failed.
+ */
+void *
+nnstreamer_filter_get_shared_model_referred_list (const char *key)
+{
+  GstTensorFilterSharedModelRepresenatation *value;
+
+  /* search the table with key */
+  if (!shared_model_table) {
+    ml_loge ("The shared model representation is not supported properly!");
+    return NULL;
+  }
+  value = g_hash_table_lookup (shared_model_table, key);
+  if (!value) {
+    ml_logi ("There is no value of the key: %s", key);
+    return NULL;
+  }
+
+  return (void *) value->referred_list;
+}
