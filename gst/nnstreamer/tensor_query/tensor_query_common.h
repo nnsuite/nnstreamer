@@ -37,12 +37,13 @@ typedef enum
  * @param[in] hostname the hostname
  * @param[in] port a port number
  * @param[in] cancellable (nullable) GCancellable
+ * @param[out] saddr Socket address
  * @return Newly created socket or NULL on error.
  * @note Caller is responsible for unreffiring the returned object with g_object_unref().
  */
 extern GSocket *
 gst_tensor_query_socket_new (const gchar * hostname, guint16 port,
-    GCancellable * cancellable);
+    GCancellable * cancellable, GSocketAddress **saddr);
 /**
  * @brief Receive data from a socket.
  * @param[in] socket the socket.
